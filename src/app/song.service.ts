@@ -15,8 +15,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class SongService {
-
-  private songsUrl = 'api/songs';
+  
+  private songsUrl = 'http://api.songhits.local/songs';
 
   constructor(
       private http: HttpClient,
@@ -24,7 +24,7 @@ export class SongService {
 
   /** GET songs from the server */
   getSongs (): Observable<Song[]> {
-    return this.http.get<Song[]>(this.songsUrl)
+    return this.http.get<Song[]>(`${this.songsUrl}?_format=hal_json`)
       .pipe(
         tap(heroes => this.log('fetched songs')),
         catchError(this.handleError('getSongs', []))

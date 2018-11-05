@@ -3,4 +3,5 @@ export class Song {
   song_no: number;
   title: string;
   artist: string;
+  karaoke_system: string;
 }
