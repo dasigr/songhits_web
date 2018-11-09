@@ -1,11 +1,19 @@
-<h3>Top Heroes</h3>
-<div class="grid grid-pad">
-  <a *ngFor="let hero of heroes" class="col-1-4"
-     routerLink="/detail/{{hero.id}}">
-    <div class="module hero">
-      <h4>{{hero.name}}</h4>
-    </div>
-  </a>
+<h3>Top Songs</h3>
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+    <tr>
+      <th>Song No.</th>
+      <th>Title</th>
+      <th>Artist</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let song of songs">
+      <td>{{ song.song_no }}</td>
+      <td>{{ song.title }}</td>
+      <td>{{ song.artist }}</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
-
-<app-hero-search></app-hero-search>

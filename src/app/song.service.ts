@@ -31,15 +31,67 @@ export class SongService {
       );
   }
 
+  /** GET song by id. Return `undefined` when id not found */
+  getSongNo404<Data>(id: number): Observable<Song> {
+    const url = `${this.songsUrl}/?id=${id}`;
+    return this.http.get<Song[]>(url)
+        .pipe(
+            map(songs => songs[0]), // returns a {0|1} element array
+            tap(s => {
+              const outcome = s ? `fetched` : `did not find`;
+              this.log(`${outcome} song id=${id}`);
+            }),
+            catchError(this.handleError<Song>(`getSong id=${id}`))
+        );
+  }
+
+  /** GET song by id. Will 404 if id not found */
+  getSong(id: number): Observable<Song> {
+    const url = `${this.songsUrl}/${id}`;
+    return this.http.get<Song>(url).pipe(
+        tap(_ => this.log(`fetched song id=${id}`)),
+        catchError(this.handleError<Song>(`getSong id=${id}`))
+    );
+  }
+
   /* GET songs whose name contains search term */
   searchSongs(term: string): Observable<Song[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
       return of([]);
     }
-    return this.http.get<Song[]>(`${this.songsUrl}/?title=${term}`).pipe(
+    return this.http.get<Song[]>(`${this.songsUrl}?_format=hal_json&title=${term}`).pipe(
       tap(_ => this.log(`found songs matching "${term}"`)),
       catchError(this.handleError<Song[]>('searchSongs', []))
+    );
+  }
+
+  //////// Save methods //////////
+
+  /** POST: add a new song to the server */
+  addSong (song: Song): Observable<Song> {
+    return this.http.post<Song>(this.songsUrl, song, httpOptions).pipe(
+        tap((song: Song) => this.log(`added song w/ id=${song.id}`)),
+        catchError(this.handleError<Song>('addSong'))
+    );
+  }
+
+  /** DELETE: delete the song from the server */
+  deleteSong (song: Song | number): Observable<Song> {
+    const id = typeof song === 'number' ? song : song.id;
+    const url = `${this.songsUrl}/${id}`;
+
+    return this.http.delete<Song>(url, httpOptions).pipe(
+        tap(_ => this.log(`deleted song id=${id}`)),
+        catchError(this.handleError<Song>('deleteSong'))
+    );
+  }
+
+  /** PUT: update the song on the server */
+  updateSong (song: Song): Observable<any> {
+    return this.http.put(this.songsUrl, song, httpOptions).pipe(
+        tap(_ => this.log(`updated song id=${song.id}`)),
+        catchError(this.handleError<any>('updateSong'))
     );
   }
 
