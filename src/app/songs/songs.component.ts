@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Song } from '../song';
 import { SongService } from '../song.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.css' ]
+  selector: 'app-songs',
+  templateUrl: './songs.component.html',
+  styleUrls: ['./songs.component.css']
 })
-export class DashboardComponent implements OnInit {
-  songs: Song[] = [];
+export class SongsComponent implements OnInit {
 
+  songs: Song[];
+  
   constructor(private songService: SongService) { }
 
   ngOnInit() {
@@ -18,6 +20,7 @@ export class DashboardComponent implements OnInit {
 
   getSongs(): void {
     this.songService.getSongs()
-        .subscribe(songs => this.songs = songs.slice(1, 5));
+      .subscribe(songs => this.songs = songs);
   }
+
 }
