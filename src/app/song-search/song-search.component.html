@@ -1,0 +1,25 @@
+<div id="search-component">
+  <div class="row mb-2">
+    <div class="col">
+      <input class="form-control w-100" type="text" placeholder="Search" aria-label="Search" #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+    </div>
+  </div>
+  <div id="search-results" class="row mb-2">
+    <div class="col-md-4" *ngFor="let song of songs$ | async" >
+      <div class="card flex-md-row mb-4 shadow-sm h-md-250">
+        <div class="card-img-left">
+          <img class="card-img flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Song icon">
+          <div class="song-no">
+            <strong>{{ song.song_no }}</strong>
+          </div>
+        </div>
+        <div class="card-body d-flex flex-column align-items-start">
+          <h6 class="mb-0">
+            <a class="text-dark" routerLink="/song/{{song.id}}">{{song.title}}</a>
+          </h6>
+          <div class="text-muted">{{ song.artist }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

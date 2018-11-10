@@ -1,0 +1,23 @@
+#search-results .card {
+  overflow: hidden;
+}
+
+#search-results .card-body {
+  padding: 0.5rem;
+}
+
+#search-results .card-img-left {
+  position: relative;
+}
+
+.song-no {
+  background-color: #555555;
+  color: #ffffff;
+  padding: 4px 8px;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  z-index: 5;
+  width: 100%;
+}
