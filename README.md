@@ -1,6 +1,7 @@
-# AngularTourOfHeroes
+# Song Hits
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+You can view a demo of this project at [https://songhits.a5project.com](https://songhits.a5project.com)
 
 ## Development server
 
